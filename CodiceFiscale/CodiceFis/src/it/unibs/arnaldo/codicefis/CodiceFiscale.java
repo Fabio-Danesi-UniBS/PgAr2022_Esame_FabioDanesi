@@ -13,6 +13,7 @@ public class CodiceFiscale {
 	private String luogo;
 	private String controllo;
 	
+	
 	public String getCognome() {
 		return cognome;
 	}
@@ -100,7 +101,6 @@ public class CodiceFiscale {
 	    if ( ( ( a % 4 == 0 ) && ( a % 100 != 0 ) ) || ( a % 400 == 0 ) ) {
 	        //se bisestile aggiorna Febbraio a 29 giorni!
 	        giorni[1]=29;
-
 	     }else {
 	    	 giorni[1]=28;
 	     }
