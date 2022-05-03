@@ -1,0 +1,428 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#define R 25
+#define C 100
+
+typedef int Bool;
+
+typedef struct{
+
+	Bool pen;
+	int dir;	
+	int x;
+	int y;
+	
+}Turtle;
+
+typedef struct{
+	int com;
+	int lung_mov;
+}Commands;
+
+void displayComandi(){
+	int i, j;
+	char up=30, down=31, sx=27, dx=26;
+	
+	printf("COMANDI:\n");
+	printf("- 0 penna %c (O), 1 penna %c (I);\n", up, down);
+	printf("- 4 per ruotare il puntatore a %c, 6 per ruotare il puntatore a %c, 8 per andare avanti in base alla direzione del puntatore;\n", sx, dx);
+	printf("- 9 per terminare o resettare il disegno.\n");
+
+}//funzione mostra regole!
+
+void displayRegole(){
+	int i, j;
+	
+	printf("Turtle Graphics\n\n");
+
+	printf("Autore: Fabio Danesi\n");
+	printf("Programma: TurtleV2.c\n");
+	printf("Versione: 2.0\n\n");
+	
+	printf("Istruzioni:\nDopo aver inserito le dimensioni della griglia da disegno sara' possibile tracciare un'immagine tramite i comandi sotto riportati.\n\n");
+	
+	displayComandi();
+	
+}//funzione mostra titoli!
+
+void aiutoGioc(Turtle t){
+	
+	printf("MEMO PER IL DISEGNATORE:\n");
+	printf("La penna e' ");
+	
+	if(t.pen==0){
+		printf("su'");
+	}else if(t.pen==1){
+		printf("giu'");
+	}
+	printf(" con direzione verso ");
+	
+	switch(t.dir){
+		case 1:
+			printf("l'alto.'");
+			break;
+		case 2:
+			printf("destra.'");
+			break;
+		case 3:
+			printf("il basso.'");
+			break;
+		case 4:
+			printf("sinistra.'");
+			break;
+	}
+	printf("\n\n");
+}//funzione informazioni di stato!
+
+void pulisciGriglia(char g[][C], int a, int b){
+	int i, j;
+	
+	for(i=0;i<=a-1;i++){
+    	for(j=0;j<=b-1;j++){
+        	g[i][j]=0;
+		}
+	}
+}//funzione pulisci griglia!
+
+void displayPuntatore(Turtle t, char g[][C], int az, int by){
+	char dt=42, O=79, O2=64, a=24, b=26, c=25, d=27, a1=131, b1=132, c1=133, d1=134;
+	 
+	if(t.pen==0 && (g[t.y][t.x]>23 && g[t.y][t.x]<28)){
+		g[t.y][t.x]=O;//penna sù e casella da scrivere con freccia
+	}else if(t.pen==0 && (g[t.y][t.x]>130 && g[t.y][t.x]<135)){
+		g[t.y][t.x]=O2;//penna sù e casella da scrivere con freccia2
+	}else if(t.pen==1 && g[t.y][t.x]==O){
+		goto Olib;//penna giù e casella da scrivere tondo
+	}else if(t.pen==1 && g[t.y][t.x]==O2){
+		goto Onlib;//penna giù e casella da scrivere tondo2
+	}else if(t.pen==0 && g[t.y][t.x]==0){
+		g[t.y][t.x]=O;//penna sù e casella da scrivere vuota
+	}else if(t.pen==0 && g[t.y][t.x]==dt){
+		g[t.y][t.x]=O2;//penna sù e casella occupata
+	}else if(t.pen==1 && (g[t.y][t.x]==0 || (g[t.y][t.x]>23 && g[t.y][t.x]<28))){
+		
+		Olib:
+		
+		if(t.dir==1){
+			g[t.y][t.x]=a;
+		}else if(t.dir==2){
+			g[t.y][t.x]=b;
+		}else if(t.dir==3){
+			g[t.y][t.x]=c;
+		}else if(t.dir==4){
+			g[t.y][t.x]=d;
+		}
+	}else if(t.pen==1 && (g[t.y][t.x]==dt || (g[t.y][t.x]>130 && g[t.y][t.x]<135))){
+		
+		Onlib:
+		
+		if(t.dir==1){
+			g[t.y][t.x]=a1;
+		}else if(t.dir==2){
+			g[t.y][t.x]=b1;
+		}else if(t.dir==3){
+			g[t.y][t.x]=c1;
+		}else if(t.dir==4){
+			g[t.y][t.x]=d1;
+		}
+	}
+}//funzione posizione e forma del puntatore!
+
+char converti(char g){
+	char r;
+	char dt=42, O=79, O2=64, a=24, b=26, c=25, d=27, a1=131, b1=132, c1=133, d1=134;
+	
+	if(g==dt){
+		r=dt;
+		return r;
+	}
+	
+	if(g==0){
+		r=0;
+		return r;
+	}
+	
+	if(g==O){
+		r=O;
+		return r;
+	}
+	
+	if(g==O2){
+		r=O;
+		return r;
+	}
+	
+	if(g==a){
+		r=a;
+		return r;
+	}
+	
+	if(g==b){
+		r=b;
+		return r;
+	}
+	
+	if(g==c){
+		r=c;
+		return r;
+	}
+	
+	if(g==d){
+		r=d;
+		return r;
+	}
+	
+	if(g==a1){
+		r=a;
+		return r;
+	}
+	
+	if(g==b1){
+		r=b;
+		return r;
+	}
+	
+	if(g==c1){
+		r=c;
+		return r;
+	}
+	
+	if(g==d1){
+		r=d;
+		return r;
+	}
+}//funzione di conversione visiva!
+
+void statoPartita(Turtle t, char g[][C], int a, int b){
+	int i, j;
+	char ss=201, sd=187, is=200, id=188, s=205, l=186;
+	
+	displayPuntatore(t, g, a, b);//imposta il puntatore
+	
+		printf("\n%c", ss);
+    	for(j=0;j<=b-1;j++){
+        	printf("%c", s);
+		}
+		printf("%c\n", sd);
+	
+		for(i=0;i<=a-1;i++){
+			printf("%c", l);
+    		for(j=0;j<=b-1;j++){
+        		printf("%c", converti(g[i][j]));	
+			}
+			printf("%c\n", l);
+		}
+		
+		printf("%c", is);
+    	for(j=0;j<=b-1;j++){
+        	printf("%c", s);
+		}
+		printf("%c\n\n", id);
+		
+}//funzione stampa stato di gioco!
+
+void ndot(Turtle z, char g[][C], int a, int b){
+	int i, j;
+	char dt=42, O=79, O2=64;
+	
+	for(i=0;i<=a-1;i++){
+    	for(j=0;j<=b-1;j++){
+        	if(g[i][j]==O && (i==z.y && j==z.x)){
+        		g[i][j]=0;
+			}
+			
+			if(g[i][j]==O2 && (i==z.y && j==z.x)){
+        		g[i][j]=dt;
+			}
+			
+		}
+	}
+}//funzione di autocorrezione grafica!
+
+void dot(Turtle z, Turtle t, char g[][C], int a, int b){
+	
+	char dt=42;
+	
+	if(t.pen==1){
+		while(t.y<z.y){
+			g[z.y][t.x]=dt;
+			z.y--;
+		}
+		while(t.x>z.x){
+			g[t.y][z.x]=dt;
+			z.x++;
+		}
+		while(t.y>z.y){
+			g[z.y][t.x]=dt;
+			z.y++;
+		}
+		while(t.x<z.x){
+			g[t.y][z.x]=dt;
+			z.x--;
+		}
+	}
+	
+	if(t.pen==0){
+		ndot(z, g, a, b);
+	}
+	
+}//funzione movimento e scrittura del puntatore!
+
+void traccia(Commands c, Turtle *t, char g[][C], int a, int b){
+	Turtle z=*t;
+	
+		if((*t).dir==1){
+			(*t).y=(*t).y-c.lung_mov;//su
+			if((*t).y<0){
+				(*t).y=0;
+			}
+		}else if((*t).dir==2){
+			(*t).x=(*t).x+c.lung_mov;//dx
+			if((*t).x>b-1){
+				(*t).x=b-1;
+			}
+		}else if((*t).dir==3){
+			(*t).y=(*t).y+c.lung_mov;//giù
+			if((*t).y>a-1){
+				(*t).y=a-1;
+			}
+		}else if((*t).dir==4){
+			(*t).x=(*t).x-c.lung_mov;//sx
+			if((*t).x<0){
+				(*t).x=0;
+			}
+		}
+		
+		dot(z, *t, g, a, b);
+}//funzione spostamento in relazione alla direzione del puntatore!
+
+void controlloComando(Commands c, Turtle *t, char g[][C], int a, int b, Bool *end){
+	
+	switch(c.com){
+		case 0:
+			(*t).pen=0;
+			break;
+			
+		case 1:
+			(*t).pen=1;
+			break;
+			
+		case 4:
+			if((*t).dir==1){
+				(*t).dir=4;
+			}else{
+				(*t).dir--;
+			}
+			break;//sinistra(-1)
+			
+		case 6:
+			if((*t).dir==4){
+				(*t).dir=1;
+			}else{
+				(*t).dir++;
+			}
+			break;//destra(+1)
+			
+		case 8:
+			traccia(c, &(*t), g, a, b);
+			break;
+			
+		case 9:
+			*end=1;
+			break;
+	}
+}//funzione controllo comandi inseriti!
+
+void ripeti(Bool *end, int r){
+	int s;
+	
+			if(*end!=0){
+				do{
+					printf("\nTERMINAZIONE DEL PROGRAMMA?\n");
+					printf("\nDigita:\n- 0 per terminare il disegno;\n- 1 per ricominciare;\n- 2 per annullare l'operazione di terminazione.\n\n");
+					scanf("%d", &s);
+					printf("\n");
+					
+					if(s==2){
+						*end=0;
+					}
+					
+					if(s==1){
+						printf("Reset\n----------------------------------\n\n"); 
+						r++;
+						disegna(r);
+					}
+					
+					if(s==0){
+						printf("Chiusura applicativo!");
+					}
+				}while(s!=1 && s!=0 && s!=2);
+			}
+}//funzione ripeti o termina disegno!
+
+void disegna(int r){
+	char g[R][C];
+	int z=0, maxR, maxC;
+	
+	Bool end=0;
+	Commands c={0, 0};
+
+	if(r==0){
+		displayRegole();
+	}
+	
+	do{
+		
+		if(z!=0){
+			printf("\nDimensioni errate! Riprova!\n");
+		}
+		
+		printf("\nPrima di iniziare inserisci la dimensione della griglia di disegno (Massimo %d righe e %d colonne):\n- Nuove righe massime: ", R, C);
+		scanf("%d", &maxR);
+		printf("- Nuove colonne Massime: ");
+		scanf("%d", &maxC);
+		z++;
+		
+	}while(maxC<0 || maxR<0 || maxC>C || maxR>R);
+	
+	Turtle t={0, 1, (maxC-1)/2, (maxR-1)/2};
+	
+	pulisciGriglia(g, maxR, maxC);
+	
+	while(end==0){
+		
+			statoPartita(t, g, maxR, maxC);
+			aiutoGioc(t);
+			displayComandi();
+			z=0;
+			
+			do{
+				
+				if(z!=0){
+					printf("\nComando errato! Riprova!\n");
+				}
+
+				printf("\nInserisci:\n- Comando: ");
+				scanf("%d", &c.com);//direzione del movimento o penna su, giù
+				if(c.com==8){
+					printf("- Lunghezza del movimento: ");
+					scanf("%d", &c.lung_mov);//lunghezza del movimento (in riferimento alla direzione)
+				}
+				z++;
+				
+			}while(end==0 &&(c.com<0 || c.com>1 && c.com<4 || c.com==5 || c.com==7 || c.com>9 || c.lung_mov<0));
+			//mosse(0 penna su, 1 penna giù, 4 sinistra, 6 destra, 8 avanti, 9 termina)
+			
+			controlloComando(c, &t, g, maxR, maxC, &end);
+			ripeti(&end, r);
+	}
+}//funzione disegno!
+
+int main(){
+	int r=0;
+	
+	disegna(r);
+	return 0;
+}
