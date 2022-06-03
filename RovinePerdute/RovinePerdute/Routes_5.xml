@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Routes_5.xml>
+    <routes>
+        <route cities="3" cost="11114" team="Tonathiu">
+            <city id="0" name="campo base"/>
+            <city id="3" name="Mixco Vieio"/>
+            <city id="4" name="Rovine Perdute"/>
+        </route>
+        <route cities="3" cost="1791" team="Metztli">
+            <city id="0" name="campo base"/>
+            <city id="1" name="Tikal"/>
+            <city id="4" name="Rovine Perdute"/>
+        </route>
+    </routes>
+</Routes_5.xml>

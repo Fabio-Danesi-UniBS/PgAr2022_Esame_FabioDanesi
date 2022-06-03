@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Routes_12.xml>
+    <routes>
+        <route cities="5" cost="11" team="Tonathiu">
+            <city id="0" name="campo base"/>
+            <city id="1" name="Cusco"/>
+            <city id="3" name="Ollantaytambo"/>
+            <city id="9" name="Machu Picchu"/>
+            <city id="12" name="Rovine Perdute"/>
+        </route>
+        <route cities="4" cost="20" team="Metztli">
+            <city id="0" name="campo base"/>
+            <city id="6" name="Tenochtitlan"/>
+            <city id="10" name="Quirigua"/>
+            <city id="12" name="Rovine Perdute"/>
+        </route>
+    </routes>
+</Routes_12.xml>
